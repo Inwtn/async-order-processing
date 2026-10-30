@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.kafka.annotation.DltHandler;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;
-import org.springframework.kafka.retrytopic.DltStrategy;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +20,7 @@ public class OrderConsumer {
         this.processor = processor;
     }
 
-    @RetryableTopic(kafkaTemplate = "kafkaTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2),
-            dltProcessingFailureStrategy = DltStrategy.FAIL_ON_ERROR)
+    @RetryableTopic(kafkaTemplate = "kafkaTemplate", attempts = "3", backoff = @Backoff(delay = 1000, multiplier = 2))
     @KafkaListener(topics = OutboxPublisher.TOPIC, groupId = "order-processing")
     public void consume(String orderId) {
         UUID id = UUID.fromString(orderId);
