@@ -45,7 +45,7 @@ class OrderFlowIntegrationTest {
     @Autowired OrderAttemptService attempts;
     @Autowired OrderProcessingService processor;
     @Autowired OutboxPublisher publisher;
-    @MockitoBean(name = "kafkaTemplate") KafkaTemplate<String, String> kafka;
+    @MockitoBean(name = "testKafkaTemplate") KafkaTemplate<String, String> kafka;
 
     @BeforeEach
     void clean() {
